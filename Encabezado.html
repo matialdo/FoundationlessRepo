@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Encabezado</title>
+<style>
+:root {
+  --bg: #1d2a2e;
+  --text: #f6f3ee;
+  --strip: rgba(70, 70, 70, 0.55);
+  --strip-border: rgba(255, 255, 255, 0.18);
+  --img-a: #3f6b6f;
+  --img-b: #1d2a2e;
+  --img-c: #b9854f;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #10181a; --strip: rgba(40, 40, 40, 0.6); }
+}
+:root[data-theme="dark"] { --bg: #10181a; --strip: rgba(40, 40, 40, 0.6); }
+
+*, *::before, *::after { box-sizing: inherit; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body { font-family: "Georgia", "Times New Roman", serif; }
+
+/* Imagen de fondo: reemplazar la URL de --hero-img (o el background) por la imagen final */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,0) 45%),
+    radial-gradient(ellipse at 70% 25%, var(--img-c) 0%, transparent 55%),
+    linear-gradient(160deg, var(--img-a), var(--img-b));
+  background-size: cover;
+  background-position: center;
+}
+
+/* Franja gris semitransparente a los pies de la imagen */
+.frases {
+  width: 100%;
+  min-height: 7.5rem;
+  padding: 1.5rem clamp(1.25rem, 6vw, 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--strip);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid var(--strip-border);
+}
+.frase {
+  margin: 0;
+  max-width: 62ch;
+  text-align: center;
+  font-size: clamp(1.05rem, 1.2rem + 0.6vw, 1.6rem);
+  line-height: 1.5;
+  font-style: italic;
+  transition: opacity .8s ease;
+}
+.frase.oculta { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) { .frase { transition: none; } }
+
+/* Sección: proceso */
+.proceso {
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 6vw, 5rem);
+  background: var(--bg);
+}
+.pasos {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.paso {
+  padding: 1.75rem;
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(160deg, #f5821f, #dd5a0c);
+}
+.paso:nth-child(2) { background: linear-gradient(160deg, #ee6f14, #d25008); }
+.paso:nth-child(3) { background: linear-gradient(160deg, #e66110, #c94905); }
+.paso .num { margin: 0 0 .75rem; font-size: .85rem; font-weight: 700; opacity: .85; }
+.paso h2 { margin: 0 0 1rem; font-size: 1.6rem; line-height: 1.2; }
+.paso h3 { margin: 0 0 1rem; font-size: 1rem; font-weight: 700; line-height: 1.4; }
+.paso p.desc { margin: 0; font-size: .95rem; line-height: 1.65; opacity: .95; }
+
+/* Sección: imagen con mensaje fijo */
+.mensaje {
+  position: relative;
+  min-height: 80vh;
+  min-height: 80svh;
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(to top, rgba(0,0,0,.35), rgba(0,0,0,0) 45%),
+    radial-gradient(ellipse at 25% 30%, var(--img-c) 0%, transparent 55%),
+    linear-gradient(200deg, var(--img-a), var(--img-b));
+  background-size: cover;
+  background-position: center;
+}
+/* Sección: nave extractora */
+.nave { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 3vw, 3rem); background: var(--bg); }
+.nave-wrap { max-width: 1400px; margin: 0 auto; }
+.nave-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 1.25rem; }
+.nave-img, .nave-modelo {
+  position: relative;
+  min-height: clamp(24rem, 62vh, 40rem);
+  border-radius: 12px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+/* Imagen grande: reemplazar el background-image de .nave-img */
+.nave-img {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 30% 25%, var(--img-c) 0%, transparent 55%),
+    linear-gradient(190deg, var(--img-a), var(--img-b));
+}
+/* Imagen derecha: luego se cambia por el modelo 3D */
+.nave-modelo {
+  background-color: #000;
+  background-image: radial-gradient(ellipse at 50% 35%, #16335c 0%, #000 70%);
+}
+.nave-desc {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--strip);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid var(--strip-border);
+}
+.nave-desc p { margin: 0; font-size: .95rem; line-height: 1.6; color: var(--text); }
+
+/* Panel de información (se abre entre las imágenes y los botones) */
+.info { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.2, .8, .2, 1); }
+.info.abierto { grid-template-rows: 1fr; }
+.info-inner { min-height: 0; overflow: hidden; }
+.info-card {
+  margin-top: 1.25rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(160deg, #f5821f, #dd5a0c);
+}
+.info-card h3 { margin: 0 0 .4rem; font-size: 1.3rem; line-height: 1.3; }
+.info-card p { margin: 0; max-width: 70ch; font-size: 1rem; line-height: 1.6; }
+
+/* Botones a los pies de las imágenes */
+.cajones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 1.25rem; }
+.cajones button {
+  padding: 1.1rem 1rem;
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(160deg, #f5821f, #dd5a0c);
+  cursor: pointer;
+  transition: background .3s ease, box-shadow .3s ease;
+}
+.cajones button[aria-expanded="true"] { background: #b44004; box-shadow: inset 0 0 0 2px rgba(255,255,255,.55); }
+.cajones button:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
+@media (max-width: 800px) {
+  .nave-grid { grid-template-columns: 1fr; }
+  .nave-img, .nave-modelo { min-height: 22rem; }
+  .cajones { grid-template-columns: 1fr; gap: .75rem; }
+}
+@media (prefers-reduced-motion: reduce) { .info, .cajones button { transition: none; } }
+
+/* Sección: proceso de selección (etapas) */
+.etapas { --c: 2.75rem; padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 3vw, 3rem); background: var(--bg); }
+.etapas h2 { margin: 0 0 clamp(2rem, 5vw, 3.5rem); text-align: center; font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.4rem); line-height: 1.2; }
+.etapas-lista { max-width: 1100px; margin: 0 auto; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); }
+.etapa { position: relative; display: flex; flex-direction: column; align-items: center; padding: 0 .6rem; }
+/* Línea que une cada círculo con el siguiente */
+.etapa:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--c) / 2 - 1.5px);
+  left: 50%;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, .25);
+  transition: background .5s ease;
+}
+.etapa.hecho:not(:last-child)::after { background: #f5821f; }
+.etapa-btn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--text);
+  cursor: pointer;
+}
+.etapa-btn:focus-visible { outline: 3px solid var(--text); outline-offset: 6px; border-radius: 8px; }
+.circulo {
+  width: var(--c);
+  height: var(--c);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, .35);
+  background: var(--bg);
+  font-weight: 700;
+  transition: background .4s ease, border-color .4s ease, box-shadow .4s ease;
+}
+.etapa.hecho .circulo, .etapa.activo .circulo { background: #f5821f; border-color: #f5821f; color: #fff; }
+.etapa.activo .circulo { box-shadow: 0 0 0 6px rgba(245, 130, 31, .3); }
+.etapa-titulo { font-size: 1.05rem; font-weight: 700; line-height: 1.3; text-align: center; }
+.etapa-desc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.2, .8, .2, 1); }
+.etapa.activo .etapa-desc { grid-template-rows: 1fr; }
+.etapa-desc > div { min-height: 0; overflow: hidden; }
+.etapa-desc p { margin: .75rem 0 0; font-size: .95rem; line-height: 1.6; text-align: center; opacity: .88; }
+
+@media (max-width: 800px) {
+  .etapas-lista { grid-template-columns: 1fr; max-width: 32rem; }
+  .etapa { display: grid; grid-template-columns: var(--c) 1fr; column-gap: 1rem; align-items: start; padding: 0 0 1.5rem; }
+  .etapa:not(:last-child)::after { top: var(--c); bottom: 0; left: calc(var(--c) / 2 - 1.5px); width: 3px; height: auto; }
+  .etapa-btn { display: contents; }
+  .circulo { grid-column: 1; grid-row: 1 / span 2; align-self: start; position: relative; z-index: 1; }
+  .etapa-titulo { grid-column: 2; text-align: left; align-self: center; min-height: var(--c); display: flex; align-items: center; }
+  .etapa-desc { grid-column: 2; }
+  .etapa-desc p { text-align: left; margin-top: .25rem; }
+}
+@media (prefers-reduced-motion: reduce) { .etapa-desc, .circulo, .etapa::after { transition: none; } }
+
+/* Sección: nuestros éxitos */
+.exitos { padding: clamp(3rem, 8vw, 6rem) clamp(.75rem, 2vw, 2rem); background: var(--bg); }
+.exitos-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: center;
+}
+/* Imagen: reemplazar el background-image de .exitos-img */
+.exitos-img {
+  min-height: clamp(26rem, 80vh, 46rem);
+  border-radius: 12px;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 60% 30%, var(--img-c) 0%, transparent 55%),
+    linear-gradient(170deg, var(--img-a), var(--img-b));
+  background-size: cover;
+  background-position: center;
+}
+.exitos-texto h2 { margin: 0 0 1.25rem; font-size: clamp(2rem, 1.4rem + 2.2vw, 3.2rem); line-height: 1.1; }
+.exitos-texto p { margin: 0 0 1rem; max-width: 52ch; font-size: clamp(1rem, .95rem + .3vw, 1.2rem); line-height: 1.7; }
+.exitos-texto p:last-child { margin-bottom: 0; }
+@media (max-width: 800px) { .exitos-grid { grid-template-columns: 1fr; } .exitos-img { min-height: 24rem; } }
+
+/* Sección: requisitos e inscripción */
+.requisitos { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 3vw, 3rem); background: var(--bg); }
+.req-wrap { max-width: 1100px; margin: 0 auto; }
+.req-wrap h2 { margin: 0 0 clamp(2rem, 5vw, 3rem); text-align: center; font-size: clamp(2rem, 1.4rem + 2.2vw, 3.2rem); line-height: 1.1; }
+.req-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.25rem; }
+.req-card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid var(--strip-border);
+  border-top: 4px solid #f5821f;
+}
+.req-card h3 { margin: 0 0 .5rem; font-size: 1.2rem; line-height: 1.3; }
+.req-card p { margin: 0; font-size: 1rem; line-height: 1.6; opacity: .9; }
+.req-cta { margin-top: clamp(2rem, 5vw, 3rem); text-align: center; }
+.form-wrap { max-width: 900px; margin-left: auto; margin-right: auto; }
+.btn-inscribir {
+  padding: 1rem 2rem;
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(160deg, #f5821f, #dd5a0c);
+  cursor: pointer;
+}
+.btn-inscribir[aria-expanded="true"] { background: #b44004; }
+.btn-inscribir:focus-visible, .req-form button:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+
+.form-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.2, .8, .2, 1); }
+.form-wrap.abierto { grid-template-rows: 1fr; }
+.form-wrap > div { min-height: 0; overflow: hidden; }
+.req-form {
+  margin-top: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid var(--strip-border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem 1.25rem;
+}
+.req-form h3 { grid-column: 1 / -1; margin: 0; font-size: 1.4rem; }
+.campo { display: flex; flex-direction: column; gap: .4rem; font-size: .95rem; font-weight: 700; }
+.campo.ancho { grid-column: 1 / -1; }
+.campo input, .campo select, .campo textarea {
+  width: 100%;
+  padding: .8rem .9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, .3);
+  background: rgba(255, 255, 255, .08);
+  color: var(--text);
+  font: inherit;
+  font-weight: 400;
+}
+.campo select option { background: #1d2a2e; color: #f6f3ee; }
+.campo textarea { min-height: 6rem; resize: vertical; }
+.campo input:focus-visible, .campo select:focus-visible, .campo textarea:focus-visible { outline: 3px solid #f5821f; outline-offset: 1px; }
+.campo [aria-invalid="true"] { border-color: #ff8a65; box-shadow: 0 0 0 2px rgba(255, 138, 101, .35); }
+.form-pie { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.form-pie button { padding: .9rem 2rem; border: 0; border-radius: 10px; font: inherit; font-weight: 700; font-size: 1.05rem; color: #fff; background: linear-gradient(160deg, #f5821f, #dd5a0c); cursor: pointer; }
+.aviso { margin: 0; font-size: .95rem; }
+.aviso a { color: inherit; font-weight: 700; }
+@media (max-width: 700px) { .req-form { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .form-wrap { transition: none; } }
+
+/* Sección final: sorteo */
+.sorteo { padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 3vw, 3rem); background: #12171f; }
+.sorteo-wrap { max-width: 1100px; margin: 0 auto; }
+.sorteo-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+.sorteo h2 { margin: 0 0 .5rem; font-size: clamp(1.6rem, 1.2rem + 1.8vw, 2.6rem); line-height: 1.2; }
+.sorteo h2 span { color: #f5821f; }
+.sorteo-sub { margin: 0; font-size: .92rem; opacity: .8; }
+.resultado { margin: 0; font-size: 1.2rem; font-weight: 700; color: #f5a05a; }
+.sorteo .form-wrap { max-width: none; }
+.sorteo input[type="date"] { color-scheme: dark; }
+
+/* Sobre nosotros */
+.nosotros { padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 3rem) clamp(2rem, 5vw, 4rem); background: var(--bg); }
+.nosotros-wrap { max-width: 900px; margin: 0 auto; }
+.nosotros-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--strip-border);
+  background: rgba(255, 255, 255, .07);
+  color: var(--text);
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.nosotros-btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+.nosotros-btn .mas { font-size: 1.6rem; line-height: 1; transition: transform .4s ease; }
+.nosotros-btn[aria-expanded="true"] .mas { transform: rotate(45deg); }
+.nosotros-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.2, .8, .2, 1); }
+.nosotros-panel.abierto { grid-template-rows: 1fr; }
+.nosotros-panel > div { min-height: 0; overflow: hidden; }
+.nosotros-panel p { margin: 0; padding: 1.25rem .25rem 0; max-width: 62ch; font-size: 1.05rem; line-height: 1.7; }
+@media (prefers-reduced-motion: reduce) { .nosotros-panel, .nosotros-btn .mas { transition: none; } }
+</style>
+</head>
+<body>
+<header class="hero" id="inicio">
+  <div class="frases" aria-live="polite">
+    <p class="frase" id="frase"></p>
+  </div>
+</header>
+
+<section class="proceso" id="proceso">
+  <div class="pasos">
+    <article class="paso">
+      <p class="num">Paso 1</p>
+      <h2>Revisa</h2>
+      <p class="desc">Revisa cuáles son los requisitos para ser extractor, si los cumples no dudes en postular!</p>
+    </article>
+    <article class="paso">
+      <p class="num">Paso 2</p>
+      <h2>Decide</h2>
+      <p class="desc">Decide si quieres ser parte de la importantísima misión de salvar a la humanidad de su extinción.</p>
+    </article>
+    <article class="paso">
+      <p class="num">Paso 3</p>
+      <h2>Haz el trámite</h2>
+      <p class="desc">Más abajo está toda la información necesaria para postular, si quieres hacer un cambio en tu vida para darle un propósito, hazlo ya!</p>
+    </article>
+  </div>
+</section>
+
+<section class="mensaje" id="esperanza">
+  <div class="frases">
+    <p class="frase">Tú eres la esperanza</p>
+  </div>
+</section>
+
+<section class="nave" id="nave">
+  <div class="nave-wrap">
+    <div class="nave-grid">
+      <!-- Imagen grande: reemplazar el background-image de .nave-img -->
+      <div class="nave-img" role="img" aria-label="Naves extractoras en fila"></div>
+      <!-- Imagen derecha: luego se cambia por el modelo 3D -->
+      <div class="nave-modelo" role="img" aria-label="Nave extractora">
+        <div class="nave-desc">
+          <p>Las naves extractoras se acoplan al planeta para extraer pirita y terranita, viene incorporado con torretas que defienden la nave de vida extraterrestre. El extractor debe usar la terranita extraída para ir mejorando la nave a medida que extrae más recursos para asegurar la supervivencia de la nave.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info" id="info">
+      <div class="info-inner">
+        <div class="info-card" aria-live="polite">
+          <h3 id="info-t"></h3>
+          <p id="info-d"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cajones">
+      <button type="button" aria-expanded="false" aria-controls="info"
+        data-t="Compartimento resistente"
+        data-d="Compartimento capaz de resistir impactos de asteroides y ataques de especies inferiores.">Compartimento</button>
+      <button type="button" aria-expanded="false" aria-controls="info"
+        data-t="Broca con filo y geometría precisos"
+        data-d="Capaz de atravesar cualquier cosa que se interponga entre tú y los recursos.">Broca</button>
+      <button type="button" aria-expanded="false" aria-controls="info"
+        data-t="Cohetes propulsores"
+        data-d="Con la capacidad de propulsarte hasta cualquier planeta para enriquecerte de sus minerales.">Propulsores</button>
+    </div>
+  </div>
+</section>
+
+<section class="etapas" id="etapas">
+  <h2>Proceso para ser extractor</h2>
+  <ol class="etapas-lista">
+    <li class="etapa">
+      <button type="button" class="etapa-btn"><span class="circulo">1</span><span class="etapa-titulo">Postulación</span></button>
+      <div class="etapa-desc"><div><p>Postular enviando tus datos personales</p></div></div>
+    </li>
+    <li class="etapa">
+      <button type="button" class="etapa-btn"><span class="circulo">2</span><span class="etapa-titulo">Primera selección</span></button>
+      <div class="etapa-desc"><div><p>Primera fase de selección según edad, capacidad física y IQ</p></div></div>
+    </li>
+    <li class="etapa">
+      <button type="button" class="etapa-btn"><span class="circulo">3</span><span class="etapa-titulo">Transporte</span></button>
+      <div class="etapa-desc"><div><p>Si pasas quedas seleccionado automáticamente, se enviará un transporte a su domicilio el día siguiente</p></div></div>
+    </li>
+    <li class="etapa">
+      <button type="button" class="etapa-btn"><span class="circulo">4</span><span class="etapa-titulo">Entrenamiento</span></button>
+      <div class="etapa-desc"><div><p>Entrenamiento en los centros de reclutamiento que dura 2 años</p></div></div>
+    </li>
+    <li class="etapa">
+      <button type="button" class="etapa-btn"><span class="circulo">5</span><span class="etapa-titulo">Primera misión</span></button>
+      <div class="etapa-desc"><div><p>Paso final, serás enviado a tu primera misión de extracción</p></div></div>
+    </li>
+  </ol>
+</section>
+
+<section class="exitos" id="exitos">
+  <div class="exitos-grid">
+    <div class="exitos-img" role="img" aria-label="Planetas extraídos"></div>
+    <div class="exitos-texto">
+      <h2>Nuestros éxitos</h2>
+      <p>Nuestro programa de extracción de recursos ha llevado a la humanidad a nuevos horizontes, con un aumento del 300% en la producción de materias primas gracias a la terranita y purita extraída.</p>
+      <p>Hemos pacificado y extraído más de mil planetas, de los cuales más de 800 no ha sido necesario la fuerza bruta para su extracción.</p>
+    </div>
+  </div>
+</section>
+
+<section class="requisitos" id="requisitos">
+  <div class="req-wrap">
+    <h2>Requisitos</h2>
+    <div class="req-cards">
+      <article class="req-card">
+        <h3>Edad</h3>
+        <p>Tener más de 20 años.</p>
+      </article>
+      <article class="req-card">
+        <h3>Estatura</h3>
+        <p>Medir mínimo 1,80.</p>
+      </article>
+      <article class="req-card">
+        <h3>Inteligencia</h3>
+        <p>IQ de 150 mínimo.</p>
+      </article>
+      <article class="req-card">
+        <h3>Condición física</h3>
+        <p>Buena capacidad física.</p>
+      </article>
+    </div>
+    <div class="req-cta">
+      <button type="button" class="btn-inscribir" id="btn-inscribir" aria-expanded="false" aria-controls="form-wrap">Inscríbete ahora</button>
+    </div>
+
+    <div class="form-wrap" id="form-wrap">
+      <div>
+        <form class="req-form" id="req-form" novalidate>
+          <h3>Formulario de inscripción</h3>
+          <label class="campo">Nombre completo<input type="text" data-campo="Nombre completo" autocomplete="name"></label>
+          <label class="campo">Edad<input type="text" inputmode="numeric" data-campo="Edad"></label>
+          <label class="campo">Estatura (m)<input type="text" inputmode="decimal" data-campo="Estatura"></label>
+          <label class="campo">IQ<input type="text" inputmode="numeric" data-campo="IQ"></label>
+          <label class="campo">Capacidad física
+            <select data-campo="Capacidad física">
+              <option value="" selected disabled>Elige una opción</option>
+              <option>Excelente</option>
+              <option>Buena</option>
+              <option>Regular</option>
+              <option>Mala</option>
+            </select>
+          </label>
+          <label class="campo">Planeta de origen<input type="text" data-campo="Planeta de origen"></label>
+          <label class="campo ancho">¿Por qué quieres ser extractor?<textarea data-campo="Motivo"></textarea></label>
+          <div class="form-pie">
+            <button type="submit">Enviar</button>
+            <p class="aviso" id="aviso" role="status"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var DESTINO = "https://matias-lobos.itch.io/foundationless";
+  var btn = document.getElementById("btn-inscribir");
+  var wrap = document.getElementById("form-wrap");
+  var form = document.getElementById("req-form");
+  var aviso = document.getElementById("aviso");
+  var campos = form.querySelectorAll("[data-campo]");
+
+  btn.addEventListener("click", function () {
+    var abierto = wrap.classList.toggle("abierto");
+    btn.setAttribute("aria-expanded", abierto);
+    if (abierto) setTimeout(function () { campos[0].focus({ preventScroll: true }); }, 350);
+  });
+
+  campos.forEach(function (c) {
+    function limpiar() { c.removeAttribute("aria-invalid"); }
+    c.addEventListener("input", limpiar);
+    c.addEventListener("change", limpiar);
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var faltan = [];
+    campos.forEach(function (c) {
+      if (c.value.trim() === "") { faltan.push(c); c.setAttribute("aria-invalid", "true"); }
+    });
+    if (faltan.length) {
+      aviso.textContent = "Rellena todos los campos para continuar. Falta: " + faltan.map(function (c) { return c.dataset.campo; }).join(", ") + ".";
+      faltan[0].focus();
+      return;
+    }
+    aviso.textContent = "Reclutado. Te enviamos a tu primera misión…";
+    // En el sitio final puedes cambiar esta línea por: window.location.href = DESTINO;
+    var w = null;
+    try { w = window.open(DESTINO, "_blank", "noopener"); } catch (err) {}
+    if (!w) {
+      aviso.textContent = "Reclutado. ";
+      var a = document.createElement("a");
+      a.href = DESTINO; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = "Entra a tu primera misión";
+      aviso.appendChild(a);
+    }
+  });
+})();
+</script>
+
+<section class="sorteo" id="sorteo">
+  <div class="sorteo-wrap">
+    <div class="sorteo-top">
+      <div>
+        <h2>Si naciste en <span>2008</span>, revisa si fuiste sorteado.</h2>
+        <p class="sorteo-sub">Servicio de Extractores · «Servir a mi país sirve por toda la vida».</p>
+      </div>
+      <button type="button" class="btn-inscribir" id="btn-sorteo" aria-expanded="false" aria-controls="sorteo-wrap">Revisa ahora</button>
+    </div>
+    <div class="form-wrap" id="sorteo-wrap">
+      <div>
+        <form class="req-form" id="sorteo-form" novalidate>
+          <h3>Consulta de sorteo</h3>
+          <label class="campo ancho">Nombre completo<input type="text" data-campo="Nombre completo" autocomplete="name"></label>
+          <label class="campo">Número de documento<input type="text" inputmode="numeric" data-campo="Número de documento"></label>
+          <label class="campo">Fecha de nacimiento<input type="date" data-campo="Fecha de nacimiento"></label>
+          <div class="form-pie">
+            <button type="submit">Revisar</button>
+            <p class="aviso" id="sorteo-aviso" role="status"></p>
+            <p class="resultado" id="sorteo-res" role="status"></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="nosotros" id="nosotros">
+  <div class="nosotros-wrap">
+    <button type="button" class="nosotros-btn" id="btn-nosotros" aria-expanded="false" aria-controls="nosotros-panel">Sobre nosotros<span class="mas" aria-hidden="true">+</span></button>
+    <div class="nosotros-panel" id="nosotros-panel">
+      <div>
+        <p>Somos la megacorporación Foundationless, nuestra misión es salvar a la raza humana de la extinción usando cualquier medio que sea necesario. Llevaremos a la humanidad al siguiente paso de la evolución a través de la extracción. Si quieres ser parte de esta gran misión no dudes en postularte.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var btn = document.getElementById("btn-sorteo");
+  var wrap = document.getElementById("sorteo-wrap");
+  var form = document.getElementById("sorteo-form");
+  var aviso = document.getElementById("sorteo-aviso");
+  var res = document.getElementById("sorteo-res");
+  var campos = form.querySelectorAll("[data-campo]");
+
+  btn.addEventListener("click", function () {
+    var abierto = wrap.classList.toggle("abierto");
+    btn.setAttribute("aria-expanded", abierto);
+    if (abierto) setTimeout(function () { campos[0].focus({ preventScroll: true }); }, 350);
+  });
+  campos.forEach(function (c) {
+    function limpiar() { c.removeAttribute("aria-invalid"); }
+    c.addEventListener("input", limpiar);
+    c.addEventListener("change", limpiar);
+  });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    res.textContent = "";
+    var faltan = [];
+    campos.forEach(function (c) {
+      if (c.value.trim() === "") { faltan.push(c); c.setAttribute("aria-invalid", "true"); }
+    });
+    if (faltan.length) {
+      aviso.textContent = "Rellena todos los campos. Falta: " + faltan.map(function (c) { return c.dataset.campo; }).join(", ") + ".";
+      faltan[0].focus();
+      return;
+    }
+    aviso.textContent = "";
+    res.textContent = campos[0].value.trim() + ", saliste sorteado. Un transporte irá a tu domicilio mañana.";
+  });
+
+  var nb = document.getElementById("btn-nosotros");
+  var np = document.getElementById("nosotros-panel");
+  nb.addEventListener("click", function () {
+    nb.setAttribute("aria-expanded", np.classList.toggle("abierto"));
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var items = document.querySelectorAll(".etapa");
+  var actual = 0, timer;
+  function seleccionar(i) {
+    actual = i;
+    items.forEach(function (li, k) {
+      li.classList.toggle("activo", k === i);
+      li.classList.toggle("hecho", k < i);
+      var b = li.querySelector(".etapa-btn");
+      if (k === i) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+    });
+  }
+  function iniciar() {
+    clearInterval(timer);
+    timer = setInterval(function () { seleccionar((actual + 1) % items.length); }, 15000);
+  }
+  items.forEach(function (li, k) {
+    li.querySelector(".etapa-btn").addEventListener("click", function () { seleccionar(k); iniciar(); });
+  });
+  seleccionar(0);
+  iniciar();
+})();
+</script>
+
+<script>
+(function () {
+  var panel = document.getElementById("info");
+  var t = document.getElementById("info-t");
+  var d = document.getElementById("info-d");
+  var botones = document.querySelectorAll(".cajones button");
+  botones.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var yaActivo = b.getAttribute("aria-expanded") === "true";
+      botones.forEach(function (o) { o.setAttribute("aria-expanded", "false"); });
+      if (yaActivo) { panel.classList.remove("abierto"); return; }
+      t.textContent = b.dataset.t;
+      d.textContent = b.dataset.d;
+      b.setAttribute("aria-expanded", "true");
+      panel.classList.add("abierto");
+    });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  var frases = [
+    "No te preguntes qué puede hacer tu país por ti, pregúntate qué puedes hacer tú por tu país.",
+    "Una nación, más que su tierra, sus cordilleras, sus mares, más que su lengua, o sus tradiciones, es una misión que cumplir.",
+    "La explotación de recursos es la esperanza del universo."
+  ];
+  var INTERVALO = 20000; // 20 segundos
+  var el = document.getElementById("frase");
+  var i = 0;
+  el.textContent = frases[0];
+  setInterval(function () {
+    el.classList.add("oculta");
+    setTimeout(function () {
+      i = (i + 1) % frases.length;
+      el.textContent = frases[i];
+      el.classList.remove("oculta");
+    }, 800);
+  }, INTERVALO);
+})();
+</script>
+</body>
+</html>
